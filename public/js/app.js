@@ -1790,13 +1790,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     tweet: function tweet() {
+      var _this = this;
+
       axios.post('/post', {
         body: this.post
       }).then(function (response) {
-        this.post = ' ';
-        console.log(this.post);
-      }).catch(function (error) {
-        console.log(error);
+        console.log(response.data);
+        _this.post = '';
       });
     }
   },

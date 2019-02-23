@@ -30,13 +30,11 @@ export default {
       axios.post('/post', {
         body:this.post
       })
-      .then(function (response) {
-        this.post = ' ' ;
-        console.log(this.post);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .then((response)=> {
+        console.log(response.data)
+        this.post = ''   
+        });
+      
     }
   },
   mounted() {
