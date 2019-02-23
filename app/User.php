@@ -2,7 +2,6 @@
 
 namespace App;
 use App\Post;
-
 use App\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,7 +37,7 @@ class User extends Authenticatable
 
     public function getAvatar()
     {
-        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=45&d=mm';
+        return 'https://s.gravatar.com/avatar/'.md5($this->email).'?s=50';
     }
 
     public function getAvatarAttribute()
@@ -49,15 +48,18 @@ class User extends Authenticatable
     public function following()
     {
       return  $this->belongsToMany(User::class,'follows','user_id','follower_id');
-    }
+  }
 
-    public function isFollowing(User $user)
-    {
-       return (bool)  $this->following->where('id',$user->id)->count();
-   }
+ 
 
-   public function notsame(User $user)
-   {
+
+  public function isFollowing(User $user)
+  {
+     return (bool)  $this->following->where('id',$user->id)->count();
+ }
+
+ public function notsame(User $user)
+ {
     return $this->id !== $user->id;
 }
 
@@ -68,5 +70,13 @@ public function canFollow(User $user)
         return false;
     }
     return !$this->isFollowing($user) ;
+}
+
+public function canUnFollow(User $user)
+{
+    if (!$this->notsame($user)) {
+        return false;
+    }
+    return $this->isFollowing($user) ; 
 }
 }

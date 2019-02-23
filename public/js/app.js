@@ -1782,10 +1782,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      post: ''
+      post: '',
+      posts: [],
+      limit: 20
     };
   },
   methods: {
@@ -1797,11 +1815,24 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response.data);
         _this.post = '';
+
+        _this.posts.unshift(response.data);
+      });
+    },
+    getposts: function getposts() {
+      var _this2 = this;
+
+      axios.get('posts').then(function (response) {
+        _this2.posts = response.data;
       });
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this3 = this;
+
+    setInterval(function () {
+      _this3.getposts();
+    }, 10000);
   }
 });
 
@@ -36889,8 +36920,7 @@ var render = function() {
                     _vm.post = $event.target.value
                   }
                 }
-              }),
-              _vm._v("\n          " + _vm._s(_vm.post) + "\n        ")
+              })
             ]),
             _vm._v(" "),
             _c("input", {
@@ -36902,7 +36932,51 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-8" }, [
-        _vm._v("\n      Timeline   \n    ")
+        !_vm.posts.length
+          ? _c("p", [_vm._v("No post yet. follow someone ")])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "posts" },
+          _vm._l(_vm.posts, function(post) {
+            return _c(
+              "div",
+              {
+                staticClass: "media",
+                attrs: { transition: "expand", "track-by": "id" }
+              },
+              [
+                _c("br"),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-left" }, [
+                  _c("img", {
+                    staticClass: "media-object",
+                    attrs: { src: post.user.avatar, alt: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-body" }, [
+                  _c("div", { staticClass: "user" }, [
+                    _c("a", { attrs: { href: "user/" + post.user.id } }, [
+                      _c("strong", [_vm._v(_vm._s(post.user.username))])
+                    ]),
+                    _vm._v(
+                      "  " + _vm._s(post.diffForHumans) + " \n\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(post.body))])
+                ])
+              ]
+            )
+          }),
+          0
+        )
       ])
     ])
   ])

@@ -9,6 +9,18 @@
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+background-color: #fff;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.expand-transition {
+transition: all .3s ease;
+height: auto;
+overflow: hidden;
+}
+
+.expand-enter, .expand-leave {
+height: 0;
+padding: 0 20px;
+opacity: 0;
 }

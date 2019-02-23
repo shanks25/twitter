@@ -7,9 +7,9 @@
      <h3>{{$user->username}}</h3>  
  	@if (Auth::user()->notsame($user))
  	@if (Auth::user()->isFollowing($user))
- 		<a href="#"> UnFollow </a>
+ 			<a href="{{ route('unfollow',$user->id) }}"> UnFollow </a>
  		 @else
- 		<a href="#"> Follow </a>
+ 		<a href="{{ route('follow',$user->id) }}"> Follow </a>
  	@endif
  	@endif
        </div>

@@ -2,4 +2,5 @@
 
 @section('content')
  <timeline></timeline>
+
 @endsection
